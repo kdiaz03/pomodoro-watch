@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct Pomodoro_Watch_AppA: App {
+struct Pomodoro_Watch_App: App {
     var body: some Scene {
         WindowGroup {
             TimerView()
