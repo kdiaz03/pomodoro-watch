@@ -13,20 +13,16 @@ class TimerViewModel: ObservableObject {
     @Published var elapsedTime: Double = 0.0
     @Published var isActive = false
     @Published var isRinging = false
-    @Published var totalDuration: Double = 25.0 * 60
+    @Published var pomoMode: Bool = true
 
-    // New: wall-clock based timing
+    var totalDuration: Double { adjustableTimeInMinutes * 60 }
+
     private var startDate: Date?
-    private var endDate: Date?
     private var tickTimer: Timer?
 
-    // Existing ring timer for haptics
     private var ringTimer: Timer?
-
-    // Haptics device
     let device = WKInterfaceDevice.current()
 
-    // Persistence
     private let defaults = UserDefaults.standard
     private let persistKey = "TimerViewModel.state"
 
@@ -35,12 +31,9 @@ class TimerViewModel: ObservableObject {
         var elapsedTime: Double
         var isActive: Bool
         var isRinging: Bool
-        var totalDuration: Double
         var startDate: Date?
-        var endDate: Date?
     }
 
-    // Init: restore any in-progress timer from disk and reconcile with wall clock
     init() {
         loadState()
         reconcileWithWallClock()
@@ -51,9 +44,21 @@ class TimerViewModel: ObservableObject {
     // MARK: - Derived Values
     private var effectiveElapsed: Double {
         if let start = startDate, isActive {
-            return min(Date().timeIntervalSince(start), totalDuration)
+            return max(0, min(Date().timeIntervalSince(start), totalDuration))
         } else {
             return min(elapsedTime, totalDuration)
+        }
+    }
+    
+    func userAdjustedMinutes(_ minutes: Double) {
+        let clamped = max(1, min(60, minutes))
+
+        if isActive {
+            adjustableTimeInMinutes = clamped
+            resetTimer()
+        } else {
+            adjustableTimeInMinutes = clamped
+            saveState()
         }
     }
 
@@ -78,7 +83,7 @@ class TimerViewModel: ObservableObject {
 
     // MARK: - Controls
     func toggleTimer() {
-        if isActive { pauseTimer() } else { startTimer() }
+        isActive ? pauseTimer() : startTimer()
     }
 
     func resetTimer() {
@@ -87,12 +92,9 @@ class TimerViewModel: ObservableObject {
         isRinging = false
         elapsedTime = 0
         startDate = nil
-        endDate = nil
-        totalDuration = adjustableTimeInMinutes * 60
         saveState()
     }
 
-    // Called by a 1s UI ticker. Computes from wall clock, not by incrementing.
     func updateTimer() {
         guard isActive else { return }
         elapsedTime = effectiveElapsed
@@ -102,10 +104,8 @@ class TimerViewModel: ObservableObject {
     }
 
     private func startTimer() {
-        // If resuming after a pause, preserve existing elapsedTime
         let now = Date()
         startDate = now.addingTimeInterval(-elapsedTime)
-        endDate = startDate!.addingTimeInterval(totalDuration)
         isActive = true
         isRinging = false
         startTicking()
@@ -113,12 +113,10 @@ class TimerViewModel: ObservableObject {
     }
 
     private func pauseTimer() {
-        // Freeze elapsed based on wall clock, clear dates
         elapsedTime = effectiveElapsed
         isActive = false
         stopTicking()
         startDate = nil
-        endDate = nil
         saveState()
     }
 
@@ -158,11 +156,17 @@ class TimerViewModel: ObservableObject {
     private func timerCompleted() {
         isActive = false
         stopTicking()
-        elapsedTime = totalDuration
         startDate = nil
-        endDate = nil
         startRinging()
+        primeNextSession()
         saveState()
+    }
+
+    private func primeNextSession() {
+        pomoMode.toggle()
+        adjustableTimeInMinutes = pomoMode ? 25 : 5
+        elapsedTime = 0
+        startDate = nil
     }
 
     // MARK: - Persistence & Recovery
@@ -172,9 +176,7 @@ class TimerViewModel: ObservableObject {
             elapsedTime: elapsedTime,
             isActive: isActive,
             isRinging: isRinging,
-            totalDuration: totalDuration,
-            startDate: startDate,
-            endDate: endDate
+            startDate: startDate
         )
         if let data = try? JSONEncoder().encode(state) {
             defaults.set(data, forKey: persistKey)
@@ -188,19 +190,26 @@ class TimerViewModel: ObservableObject {
         elapsedTime = state.elapsedTime
         isActive = state.isActive
         isRinging = state.isRinging
-        totalDuration = state.totalDuration
         startDate = state.startDate
-        endDate = state.endDate
     }
 
     private func reconcileWithWallClock() {
-        // If we had an active timer and a startDate, recompute elapsed vs current time.
         if isActive, let start = startDate {
-            let newElapsed = min(Date().timeIntervalSince(start), totalDuration)
+            let newElapsed = max(0, min(Date().timeIntervalSince(start), totalDuration))
             elapsedTime = newElapsed
             if newElapsed >= totalDuration {
                 timerCompleted()
             }
         }
+    }
+    
+    // MARK: - Pomodoro Switch
+    var sessionLabel: String { pomoMode ? "Session" : "Break"}
+    
+    func togglePomodoroMode() {
+        pomoMode.toggle()
+        adjustableTimeInMinutes = pomoMode ? 25 : 5
+        resetTimer()
+        saveState()
     }
 }
