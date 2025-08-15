@@ -76,9 +76,11 @@ class TimerViewModel: ObservableObject {
 
     var progressColor: Color {
         let p = progress
-        if p < 0.75 { return .green }
-        else if p < 0.9 { return .yellow }
-        else { return .red }
+        if pomoMode {
+            return .blue
+        } else {
+            return .green
+        }
     }
 
     // MARK: - Controls
