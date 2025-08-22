@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct Pomodoro_Watch_App: App {
+    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
+    
     var body: some Scene {
         WindowGroup {
-            TimerView()
+            if isFirstLaunch {
+                WelcomeTabView()
+            } else {
+                TimerView()
+            }
         }
     }
 }

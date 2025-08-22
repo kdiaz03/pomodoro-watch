@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		1171DB6C2E07954900049FAA /* Pomodoro Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1171DB6B2E07954900049FAA /* Pomodoro Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		1171DB6D2E07954900049FAA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,7 +23,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				1171DB6C2E07954900049FAA /* Pomodoro Watch App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -35,8 +30,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1171DB652E07954900049FAA /* Pomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1171DB6B2E07954900049FAA /* Pomodoro Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pomodoro Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1133CD4A2E584C080020AA06 /* Pomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Pomodoro.app; path = "/Users/kevendiaz/Desktop/Pomodoro/build/Debug-iphoneos/Pomodoro.app"; sourceTree = "<absolute>"; };
+		1133CD4B2E584C080020AA06 /* Pomodoro Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "Pomodoro Watch App.app"; path = "/Users/kevendiaz/Desktop/Pomodoro/build/Debug-watchos/Pomodoro Watch App.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -62,17 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				1171DB6F2E07954900049FAA /* Pomodoro Watch App */,
-				1171DB662E07954900049FAA /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		1171DB662E07954900049FAA /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1171DB652E07954900049FAA /* Pomodoro.app */,
-				1171DB6B2E07954900049FAA /* Pomodoro Watch App.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -94,7 +79,7 @@
 			packageProductDependencies = (
 			);
 			productName = Pomodoro;
-			productReference = 1171DB652E07954900049FAA /* Pomodoro.app */;
+			productReference = 1133CD4A2E584C080020AA06 /* Pomodoro.app */;
 			productType = "com.apple.product-type.application.watchapp2-container";
 		};
 		1171DB6A2E07954900049FAA /* Pomodoro Watch App */ = {
@@ -116,7 +101,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Pomodoro Watch App";
-			productReference = 1171DB6B2E07954900049FAA /* Pomodoro Watch App.app */;
+			productReference = 1133CD4B2E584C080020AA06 /* Pomodoro Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -147,7 +132,7 @@
 			mainGroup = 1171DB5E2E07954800049FAA;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 1171DB662E07954900049FAA /* Products */;
+			productRefGroup = 1171DB5E2E07954800049FAA;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
