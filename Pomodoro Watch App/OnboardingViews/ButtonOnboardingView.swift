@@ -1,19 +1,20 @@
 //
-//  OnboardingView.swift
+//  NotificationWelcomeView.swift
 //  Pomodoro
 //
-//  Created by Keven Diaz on 8/21/25.
+//  Created by Keven Diaz on 8/26/25.
 //
 
 import SwiftUI
 
-struct OnboardingView: View {
+struct ButtonOnboardingView : View {
     
     let title: String
     let description: String
     let icon: String
     
-    let notif: Bool
+    let buttonText: String
+    let buttonAction: () -> Void
     
     var body: some View {
         ScrollView {
@@ -34,12 +35,10 @@ struct OnboardingView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.bottom, 10)
                 
-                if notif {
-                    Button {
-                        
-                    } label: {
-                        Text("Enable Notifications")
-                    }
+                Button {
+                    buttonAction()
+                } label: {
+                    Text(buttonText)
                 }
             }
             .padding(5)
@@ -47,13 +46,15 @@ struct OnboardingView: View {
         }
         .background(Color(.gray.opacity(0.12)))
     }
+    
 }
 
-#Preview {
-    OnboardingView(
+#Preview{
+    ButtonOnboardingView(
         title: "Test Title hey sup",
         description: "Hello, welcome to Studoro!",
         icon: "hand.wave.fill",
-        notif: true
+        buttonText: "Get Started",
+        buttonAction: {}
     )
 }
