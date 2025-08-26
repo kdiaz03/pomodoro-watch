@@ -22,6 +22,7 @@ class TimerViewModel: ObservableObject {
     private var tickTimer: Timer?
 
     private var ringTimer: Timer?
+    private var pendingRingUntilActive = false
     let device = WKInterfaceDevice.current()
 
     private let defaults = UserDefaults.standard
@@ -40,6 +41,21 @@ class TimerViewModel: ObservableObject {
         reconcileWithWallClock()
         if isActive { startTicking() }
         if isRinging { startRinging() }
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidBecomeActive),
+            name: WKExtension.applicationDidBecomeActiveNotification,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appWillResignActive),
+            name: WKExtension.applicationWillResignActiveNotification,
+            object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     // MARK: - Derived Values
@@ -137,13 +153,21 @@ class TimerViewModel: ObservableObject {
     // MARK: - Ringing
     func startRinging() {
         isRinging = true
-
         ringTimer?.invalidate()
+
+        if WKExtension.shared().applicationState == .active {
+            startRingLoop()
+        } else {
+            pendingRingUntilActive = true
+            saveState()
+        }
+    }
+
+    private func startRingLoop() {
+        device.play(.success)
         ringTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in
             self?.device.play(.success)
         }
-
-        device.play(.success)
         saveState()
     }
 
@@ -151,17 +175,30 @@ class TimerViewModel: ObservableObject {
         ringTimer?.invalidate()
         ringTimer = nil
         isRinging = false
+        pendingRingUntilActive = false
         resetTimer()
         saveState()
+    }
+
+    @objc private func appDidBecomeActive() {
+        if isRinging && pendingRingUntilActive {
+            pendingRingUntilActive = false
+            startRingLoop()
+        }
+    }
+
+    @objc private func appWillResignActive() {
+        ringTimer?.invalidate()
+        ringTimer = nil
     }
 
     private func timerCompleted() {
         isActive = false
         stopTicking()
         startDate = nil
+        sendNotification()
         startRinging()
         primeNextSession()
-        sendNotification()
         saveState()
     }
 
@@ -219,8 +256,8 @@ class TimerViewModel: ObservableObject {
     //MARK: - Notification Logic
     func sendNotification() {
         let content = UNMutableNotificationContent()
-        content.title = pomoMode ? "Time to work!" : "Time to relax!"
-        content.subtitle = pomoMode ? "Don't lose focus and get back on that grind!" : "Take a mental break and enjoy!"
+        content.title = pomoMode ? "Time to relax!" : "Time to work!"
+        content.subtitle = pomoMode ? "Take a mental break and enjoy!" : "Don't lose focus and get back on that grind!"
         content.sound = UNNotificationSound.default
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)

@@ -30,8 +30,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1133CD832E5E0D5A0020AA06 /* Pomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1133CD842E5E0D5A0020AA06 /* Pomodoro Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pomodoro Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1133CD832E5E0D5A0020AA06 /* Pomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Pomodoro.app; path = "/Users/kevendiaz/Desktop/Pomodoro/build/Debug-iphoneos/Pomodoro.app"; sourceTree = "<absolute>"; };
+		1133CD852E5E65D80020AA06 /* Pomodoro Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "Pomodoro Watch App.app"; path = "/Users/kevendiaz/Desktop/Pomodoro/build/Debug-watchos/Pomodoro Watch App.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -57,8 +57,6 @@
 			isa = PBXGroup;
 			children = (
 				1171DB6F2E07954900049FAA /* Pomodoro Watch App */,
-				1133CD832E5E0D5A0020AA06 /* Pomodoro.app */,
-				1133CD842E5E0D5A0020AA06 /* Pomodoro Watch App.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,7 +101,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Pomodoro Watch App";
-			productReference = 1133CD842E5E0D5A0020AA06 /* Pomodoro Watch App.app */;
+			productReference = 1133CD852E5E65D80020AA06 /* Pomodoro Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -306,7 +304,7 @@
 				DEVELOPMENT_TEAM = KC22LGFXLB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Pomodoro;
+				INFOPLIST_KEY_CFBundleDisplayName = Doro;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -335,7 +333,7 @@
 				DEVELOPMENT_TEAM = KC22LGFXLB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Pomodoro;
+				INFOPLIST_KEY_CFBundleDisplayName = Doro;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
