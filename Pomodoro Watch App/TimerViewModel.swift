@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WatchKit
+import UserNotifications
 
 class TimerViewModel: ObservableObject {
     @Published var adjustableTimeInMinutes: Double = 25.0
@@ -160,6 +161,7 @@ class TimerViewModel: ObservableObject {
         startDate = nil
         startRinging()
         primeNextSession()
+        sendNotification()
         saveState()
     }
 
@@ -212,5 +214,18 @@ class TimerViewModel: ObservableObject {
         adjustableTimeInMinutes = pomoMode ? 25 : 5
         resetTimer()
         saveState()
+    }
+    
+    //MARK: - Notification Logic
+    func sendNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = pomoMode ? "Time to work!" : "Time to relax!"
+        content.subtitle = pomoMode ? "Don't lose focus and get back on that grind!" : "Take a mental break and enjoy!"
+        content.sound = UNNotificationSound.default
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request)
     }
 }

@@ -30,8 +30,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1133CD4A2E584C080020AA06 /* Pomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Pomodoro.app; path = "/Users/kevendiaz/Desktop/Pomodoro/build/Debug-iphoneos/Pomodoro.app"; sourceTree = "<absolute>"; };
-		1133CD4B2E584C080020AA06 /* Pomodoro Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "Pomodoro Watch App.app"; path = "/Users/kevendiaz/Desktop/Pomodoro/build/Debug-watchos/Pomodoro Watch App.app"; sourceTree = "<absolute>"; };
+		1133CD832E5E0D5A0020AA06 /* Pomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1133CD842E5E0D5A0020AA06 /* Pomodoro Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pomodoro Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -57,6 +57,8 @@
 			isa = PBXGroup;
 			children = (
 				1171DB6F2E07954900049FAA /* Pomodoro Watch App */,
+				1133CD832E5E0D5A0020AA06 /* Pomodoro.app */,
+				1133CD842E5E0D5A0020AA06 /* Pomodoro Watch App.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,7 +81,7 @@
 			packageProductDependencies = (
 			);
 			productName = Pomodoro;
-			productReference = 1133CD4A2E584C080020AA06 /* Pomodoro.app */;
+			productReference = 1133CD832E5E0D5A0020AA06 /* Pomodoro.app */;
 			productType = "com.apple.product-type.application.watchapp2-container";
 		};
 		1171DB6A2E07954900049FAA /* Pomodoro Watch App */ = {
@@ -101,7 +103,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Pomodoro Watch App";
-			productReference = 1133CD4B2E584C080020AA06 /* Pomodoro Watch App.app */;
+			productReference = 1133CD842E5E0D5A0020AA06 /* Pomodoro Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -319,7 +321,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.6.1;
+				WATCHOS_DEPLOYMENT_TARGET = 10.6;
 			};
 			name = Debug;
 		};
@@ -349,7 +351,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.6.1;
+				WATCHOS_DEPLOYMENT_TARGET = 10.6;
 			};
 			name = Release;
 		};
